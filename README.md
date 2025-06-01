@@ -76,7 +76,6 @@ Enter Instagram username: natgeo
 ## 🎨 Output Example
 
 ```ansi
-\033[95mProfile:\033[0m
 Username: natgeo
 Full Name: National Geographic
 Bio: Experience the world through the eyes of National Geographic photographers.
@@ -89,7 +88,7 @@ Private: False
 External URL: https://www.nationalgeographic.com
 Profile Pic: https://instagram.fxyz1-1.fna.fbcdn.net/...
 
-\033[94mRecent Posts and Metadata:\033[0m
+Recent Posts and Metadata:
 Post: https://instagram.fxyz1-1.fna.fbcdn.net/...
 Caption: "Stunning sunset over the Amazon..."
 Metadata: {'DateTimeOriginal': '2023:10:21 17:43:12', ...}
