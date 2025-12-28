@@ -1,0 +1,11 @@
+# Core runtime
+requests>=2.28.2
+beautifulsoup4>=4.12.2
+Pillow>=9.5.0
+
+# Optional (enable EXIF reverse-geocoding)
+geopy>=2.3.0
+
+# Optional / recommended parsers & networking
+lxml>=4.9.2
+urllib3>=1.26.16
