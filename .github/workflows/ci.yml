@@ -1,0 +1,53 @@
+name: Build & Test CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Test Python ${{ matrix.python-version }} on Ubuntu
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install System Dependencies (Tesseract OCR)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-eng
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest flake8
+
+      - name: Code Syntax & Integrity Check
+        run: |
+          # Verify bytecode compilation
+          python -m py_compile insta_osint.py
+          # Catch undefined variables or fatal syntax errors
+          flake8 insta_osint.py --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Test CLI Interface & Arguments
+        run: |
+          python insta_osint.py --help
+
+      - name: Run Pytest Test Suite
+        run: |
+          pytest -v tests/
